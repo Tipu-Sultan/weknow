@@ -4,6 +4,20 @@ include 'includes/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // Create admins table
+    $sql_admins = "
+CREATE TABLE IF NOT EXISTS admins (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+)
+";
+
+    if ($conn->query($sql_approvals) === TRUE) {
+    } else {
+    }
+
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';

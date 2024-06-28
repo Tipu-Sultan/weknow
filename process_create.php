@@ -1,6 +1,10 @@
 <?php
 include 'includes/db.php';
+
 date_default_timezone_set("Asia/Calcutta"); 
+// Create students table
+include 'includes/table.php';
+
 $errors = [];
 $response = [];
 
