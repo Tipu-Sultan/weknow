@@ -3,6 +3,7 @@ session_start();
 include 'includes/db.php';
 
 if (isset($_GET['student_id'])) {
+    
     $student_id = $_GET['student_id'];
 
     $sql = "SELECT is_approved FROM approvals WHERE student_id = ?";
@@ -14,7 +15,7 @@ if (isset($_GET['student_id'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $current_status = $row['is_approved'];
-        $new_status = $current_status == 1 ? 0 : 1; 
+        $new_status = $current_status == 1 ? 0 : 1;
 
         $update_sql = "UPDATE approvals SET is_approved = ? WHERE student_id = ?";
         $update_stmt = $conn->prepare($update_sql);

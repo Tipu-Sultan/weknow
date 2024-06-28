@@ -62,13 +62,10 @@ CREATE TABLE IF NOT EXISTS approvals (
     id INT AUTO_INCREMENT PRIMARY KEY,
     admin_id INT,
     student_id BIGINT NOT NULL,
-    is_approved INT,
-    FOREIGN KEY (admin_id) REFERENCES admins(admin_id) ON DELETE SET NULL,
-    FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
+    is_approved INT
 )
 ";
 
 if ($conn->query($sql_approvals) === TRUE) {
 } else {
 }
-?>
