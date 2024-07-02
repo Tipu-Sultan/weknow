@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $uploadOk = 0;
         }
 
-        if ($_FILES['photograph']['size'] > 500000) {
+        if ($_FILES['photograph']['size'] > 1000000) {
             $response['errors'][] = "Sorry, your file is too large.";
             $uploadOk = 0;
         }

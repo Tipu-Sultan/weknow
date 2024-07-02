@@ -95,7 +95,7 @@ if ($stmt) {
             <table>
                 <tr>
                     <th>Student Id</th>
-                    <td>' . htmlspecialchars($row['student_id']) .'</td>
+                    <td style="font-weight:bold;">' . htmlspecialchars($row['student_id']) .'</td>
                 </tr>
                 <tr>
                     <th>Name</th>

@@ -190,13 +190,12 @@
                             </div>
 
                         </div>
-                        <img id="photoPreview" src="" class="mt-3"
-                            width="100" height="100" />
+                        <img id="photoPreview" src="" class="mt-3" width="100" height="100" />
                     </div>
                 </div>
             </div>
 
-            <button class="btn btn-primary mt-4" type="submit" name="submit">Submit</button>
+            <button class="btn btn-primary mt-4 mb-5" id="studentBtn" type="submit" name="submit">Submit</button>
             <div id="error-succss_msg">
 
             </div>
@@ -225,8 +224,13 @@
 
         $('#admissionForm').on('submit', function (event) {
             event.preventDefault();
+
+            var submitBtn = $('#studentBtn');
+            submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please wait...');
+
             if (this.checkValidity() === false) {
                 event.stopPropagation();
+                submitBtn.prop('disabled', false).html('Submit');
             } else {
                 var formData = new FormData(this);
 
@@ -248,11 +252,16 @@
                     error: function (xhr, status, error) {
                         var errorMessage = xhr.status + ': ' + xhr.statusText;
                         showAlert('danger', 'Error - ' + errorMessage);
+                    },
+                    complete: function () {
+                        submitBtn.prop('disabled', false).html('Submit');
                     }
                 });
             }
+
             $(this).addClass('was-validated');
         });
+
 
         function displayErrors(errors) {
             $('.invalid-feedback').removeClass('d-block').text('');

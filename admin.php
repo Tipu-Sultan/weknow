@@ -37,7 +37,7 @@ if (!isset($_SESSION['admin_email'])) {
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $row['student_id'] . '</td>';
-                    echo '<td><img src="' . $row['photograph'] . '" class="img-fluid img-thumbnail" style="max-width: 100px; height: auto;" alt="Student Photo"></td>';
+                    echo '<td><img src="' . $row['photograph'] . '" class="img-fluid img-thumbnail" style="max-width: 50px; height: 50px;" alt="Student Photo"></td>';
                     echo '<td>' . $row['first_name'] ." ". $row['last_name']. '</td>';
                     echo '<td>' . $row['dob'] . '</td>';
                     echo '<td>' . $row['gender'] . '</td>';

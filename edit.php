@@ -89,7 +89,7 @@ $conn->close();
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="mobile">Mobile Number</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile"
+                        <input type="number" class="form-control" id="mobile" name="mobile"
                             value="<?php echo htmlspecialchars($row['mobile']); ?>" required>
                         <div class="invalid-feedback">Please enter a valid mobile number.</div>
                     </div>
@@ -119,6 +119,7 @@ $conn->close();
                                 <div class="invalid-feedback">Please select your gender.</div>
                             </div>
                         </div>
+                        <div class="invalid-feedback">Please select a gender.</div>
                     </div>
                 </div>
 
@@ -126,7 +127,7 @@ $conn->close();
                     <div class="col-md-8 mb-3">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" name="email"
-                            value="<?php echo htmlspecialchars($row['email']); ?>">
+                            value="<?php echo htmlspecialchars($row['email']); ?>" required>
                         <div class="invalid-feedback">Please enter a valid email address.</div>
                     </div>
                 </div>
@@ -145,7 +146,7 @@ $conn->close();
                     <div class="col-md-6 mb-3">
                         <label for="currentAddress">Current Address</label>
                         <input type="text" class="form-control" id="currentAddress" name="current_address"
-                            value="<?php echo htmlspecialchars($row['current_address']); ?>">
+                            value="<?php echo htmlspecialchars($row['current_address']); ?>" required>
                     </div>
                 </div>
 
@@ -159,12 +160,12 @@ $conn->close();
                     <div class="col-md-4 mb-3">
                         <label for="state">State</label>
                         <input type="text" class="form-control" id="state" name="state"
-                            value="<?php echo htmlspecialchars($row['state']); ?>">
+                            value="<?php echo htmlspecialchars($row['state']); ?>" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="country">Country</label>
                         <input type="text" class="form-control" id="country" name="country"
-                            value="<?php echo htmlspecialchars($row['country']); ?>">
+                            value="<?php echo htmlspecialchars($row['country']); ?>" required>
                     </div>
                 </div>
             </div>
@@ -182,12 +183,16 @@ $conn->close();
                     <div class="col-md-4 mb-3">
                         <label for="collegeName">College/University Name</label>
                         <input type="text" class="form-control" id="collegeName" name="college_name"
-                            value="<?php echo htmlspecialchars($row['institution']); ?>">
+                            value="<?php echo htmlspecialchars($row['institution']); ?>" required>
+                        <div class="invalid-feedback">Please enter college name.</div>
+
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="course_duration">Course Duration</label>
                         <input type="text" class="form-control" id="course_duration" name="course_duration"
-                            value="<?php echo htmlspecialchars($row['course_duration']); ?>">
+                            value="<?php echo htmlspecialchars($row['course_duration']); ?>" required>
+                        <div class="invalid-feedback">Please enter course duration.</div>
+
                     </div>
                 </div>
             </div>
@@ -206,17 +211,22 @@ $conn->close();
                         <label for="college_or_university_name">College/University Name</label>
                         <input type="text" class="form-control" id="college_or_university_name"
                             name="college_or_university_name"
-                            value="<?php echo htmlspecialchars($row['institution']); ?>">
+                            value="<?php echo htmlspecialchars($row['institution']); ?>" required>
+                        <div class="invalid-feedback">Please enter college or university name.</div>
+
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="passingYear">Passing Year</label>
                         <input type="text" class="form-control" id="passingYear" name="passing_year"
-                            value="<?php echo htmlspecialchars($row['passing_year']); ?>">
+                            value="<?php echo htmlspecialchars($row['passing_year']); ?>" required>
+                        <div class="invalid-feedback">Please enter passing year.</div>
+
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="cgpa_percentage">Percentage</label>
                         <input type="text" class="form-control" id="cgpa_percentage" name="cgpa_percentage"
-                            value="<?php echo htmlspecialchars($row['cgpa_percentage']); ?>">
+                            value="<?php echo htmlspecialchars($row['cgpa_percentage']); ?>" required>
+                        <div class="invalid-feedback">Please enter cgpa/percentage.</div>
                     </div>
                 </div>
             </div>
@@ -228,15 +238,14 @@ $conn->close();
                     <div class="col-md-12 mb-3">
                         <label for="photo">Photograph</label>
                         <div class="custom-file">
-                            <input type="file" id="photo" name="photograph" accept="image/*" required>
-                            <label class="custom-file-label" for="photo">Choose file...</label>
+                            <input type="file" id="photo" name="photograph" accept="image/*">
                         </div>
                         <img id="photoPreview" src="<?php echo htmlspecialchars($row['photograph']); ?>" class="mt-3"
                             width="100" height="100" />
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary mt-4" type="submit" name="submit">Update</button>
+            <button class="btn btn-primary mt-4 mb-4" id="studentBtn" type="submit" >Update Details</button>
             <div id="error-succss_msg">
             </div>
         </form>
@@ -264,8 +273,13 @@ $conn->close();
 
         $('#EditadmissionForm').on('submit', function (event) {
             event.preventDefault();
+
+            var submitBtn = $('#studentBtn');
+            submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please wait...');
+
             if (this.checkValidity() === false) {
                 event.stopPropagation();
+                submitBtn.prop('disabled', false).html('Submit');
             } else {
                 var formData = new FormData(this);
 
@@ -287,11 +301,16 @@ $conn->close();
                     error: function (xhr, status, error) {
                         var errorMessage = xhr.status + ': ' + xhr.statusText;
                         showAlert('danger', 'Error - ' + errorMessage);
+                    },
+                    complete: function () {
+                        submitBtn.prop('disabled', false).html('Submit');
                     }
                 });
             }
+
             $(this).addClass('was-validated');
         });
+
 
         function displayErrors(errors) {
             $('.invalid-feedback').removeClass('d-block').text('');
